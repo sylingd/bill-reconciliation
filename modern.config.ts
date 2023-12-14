@@ -10,4 +10,77 @@ export default defineConfig<'rspack'>({
       bundler: 'experimental-rspack',
     }),
   ],
+  output: {
+    externals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      '@douyinfe/semi-ui': 'SemiUI',
+      '@douyinfe/semi-icons': 'SemiIcons',
+      'mathjs': 'math',
+    }
+  },
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.byted-static.com/react/18.2.0/umd/react.production.min.js'
+        },
+        head: true,
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.byted-static.com/react-dom/18.2.0/umd/react-dom.production.min.js'
+        },
+        head: true,
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/umd/semi-ui.min.js'
+        },
+        head: true,
+      },
+      {
+        tag: 'link',
+        attrs: {
+          rel: "stylesheet",
+          href: 'https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/css/semi.css'
+        },
+        head: true,
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.48.0/dist/umd/semi-icons.min.js'
+        },
+        head: true,
+      },
+      {
+        tag: 'link',
+        attrs: {
+          rel: "stylesheet",
+          href: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.48.0/dist/css/semi-icons.css'
+        },
+        head: true,
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.byted-static.com/mathjs/12.2.0/lib/browser/math.js'
+        },
+        head: true,
+      },
+      {
+        tag: 'script',
+        attrs: {
+          id: 'xlsx-script',
+          src: 'https://unpkg.byted-static.com/xlsx/0.18.5/dist/xlsx.full.min.js',
+          async: true
+        },
+        head: true,
+      }
+    ]
+  }
 });
