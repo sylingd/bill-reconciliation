@@ -1,15 +1,15 @@
-import { BillType, IBillItem } from "@/types";
-import { loadFile, readFileText } from "@/utils/file"
-import { Idle } from "@/utils/idle";
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import { BillType, IBillItem } from '@/types';
+import { loadFile, readFileText } from '@/utils/file';
+import { Idle } from '@/utils/idle';
 
 export const importQianJiFile = () => loadFile('csv');
 
 const typeMap: Record<string, BillType> = {
-  '收入': BillType.INCOME,
-  '支出': BillType.EXPENSE,
-  '转账': BillType.TRANSFER,
-  '还款': BillType.TRANSFER,
+  收入: BillType.INCOME,
+  支出: BillType.EXPENSE,
+  转账: BillType.TRANSFER,
+  还款: BillType.TRANSFER,
   '债务-借入': BillType.BORROW_IN,
   '债务-借出': BillType.BORROW_OUT,
   '债务-收款': BillType.PAYBACK_IN,
@@ -18,7 +18,7 @@ const typeMap: Record<string, BillType> = {
 
 export async function parseQianJiFile(file: File): Promise<IBillItem[]> {
   const idle = new Idle();
-  const content = (await readFileText(file)).split('\n');
+  const content = (await readFileText(file)).trim().split('\n');
   await idle.sleep();
 
   // 首行
@@ -30,7 +30,7 @@ export async function parseQianJiFile(file: File): Promise<IBillItem[]> {
       throw new Error(`未找到 ${name} 列，请检查数据`);
     }
     return index;
-  }
+  };
   const idIndex = findIndex('DataId');
   const typeIndex = findIndex('类型');
   const moneyIndex = findIndex('金额');

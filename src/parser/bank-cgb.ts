@@ -1,14 +1,14 @@
-import { BillType, IRecordItem } from "@/types";
-import { loadFile, readFileText } from "@/utils/file";
-import { Idle } from "@/utils/idle";
-import dayjs from "dayjs";
-import { } from 'mathjs';
+import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
+import { BillType, IRecordItem } from '@/types';
+import { loadFile, readFileText } from '@/utils/file';
+import { Idle } from '@/utils/idle';
 
 export const importBankCGBFile = () => loadFile('csv');
 
-export async function parseBangCGBFile(file: File): Promise<IRecordItem[]> {
+export async function parseBankCGBFile(file: File): Promise<IRecordItem[]> {
   const idle = new Idle();
-  const content = (await readFileText(file)).split('\n');
+  const content = (await readFileText(file, 'GB2312')).trim().split('\n');
   await idle.sleep();
 
   // 首行
@@ -20,7 +20,7 @@ export async function parseBangCGBFile(file: File): Promise<IRecordItem[]> {
       throw new Error(`未找到 ${name} 列，请检查数据`);
     }
     return index;
-  }
+  };
   const moneyIndex = findIndex('入账金额');
   const timeIndex = findIndex('交易日');
   const remarkIndex = findIndex('交易摘要');
@@ -32,11 +32,12 @@ export async function parseBangCGBFile(file: File): Promise<IRecordItem[]> {
       await idle.sleep();
     }
     const line = content[i].split(',');
-    const money = Number(content[moneyIndex].trim());
+    const money = Number(line[moneyIndex].trim());
 
     result.push({
-      type: money > 0 ? BillType.INCOME : BillType.EXPENSE,
-      money: content[moneyIndex].trim(),
+      id: `cgb-${line[timeIndex].trim()}-${nanoid()}`,
+      type: money > 0 ? BillType.EXPENSE : BillType.INCOME,
+      money: line[moneyIndex].trim().replace(/^-/, ''),
       time: dayjs(line[timeIndex].trim()).unix(),
       remark: line[remarkIndex].trim(),
     });

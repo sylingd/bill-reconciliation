@@ -1,5 +1,6 @@
 export class Idle {
   private last: number = 0;
+
   constructor() {
     this.last = performance.now();
   }
@@ -9,11 +10,18 @@ export class Idle {
   }
 
   sleep(): Promise<void> {
-    return new Promise((resolve) => {
-      requestAnimationFrame(() => {
-        resolve();
-        this.last = performance.now();
-      });
+    return new Promise(resolve => {
+      if (typeof requestAnimationFrame !== 'undefined') {
+        requestAnimationFrame(() => {
+          resolve();
+          this.last = performance.now();
+        });
+      } else {
+        setTimeout(() => {
+          resolve();
+          this.last = performance.now();
+        }, 1);
+      }
     });
   }
 }

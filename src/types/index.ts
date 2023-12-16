@@ -20,7 +20,7 @@ export interface IBillItem {
 }
 
 export interface IRecordItem {
-  id?: string;
+  id: string;
   type: BillType;
   time: number;
   money: string;

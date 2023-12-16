@@ -20,9 +20,15 @@ dependencies:
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  lodash-es:
+    specifier: ^4.17.21
+    version: 4.17.21
   mathjs:
     specifier: ^12.2.0
     version: 12.2.0
+  nanoid:
+    specifier: ^3.3.7
+    version: 3.3.7
   react:
     specifier: ~18.2.0
     version: 18.2.0
@@ -42,10 +48,10 @@ devDependencies:
     version: 2.42.1(typescript@5.0.4)
   '@modern-js/app-tools':
     specifier: 2.42.1
-    version: 2.42.1(@modern-js/builder-rspack-provider@2.42.1)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(typescript@5.0.4)
+    version: 2.42.1(@modern-js/builder-rspack-provider@2.42.1)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
   '@modern-js/builder-rspack-provider':
     specifier: 2.42.1
-    version: 2.42.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+    version: 2.42.1(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
   '@modern-js/eslint-config':
     specifier: 2.42.1
     version: 2.42.1(typescript@5.0.4)
@@ -55,6 +61,9 @@ devDependencies:
   '@types/jest':
     specifier: ~29.2.4
     version: 29.2.6
+  '@types/lodash-es':
+    specifier: ^4.17.12
+    version: 4.17.12
   '@types/node':
     specifier: ~16.11.7
     version: 16.11.68
@@ -76,6 +85,12 @@ devDependencies:
   rimraf:
     specifier: ~3.0.2
     version: 3.0.2
+  ts-node:
+    specifier: ^10.9.2
+    version: 10.9.2(@types/node@16.11.68)(typescript@5.0.4)
+  tsconfig-paths:
+    specifier: ^4.2.0
+    version: 4.2.0
   typescript:
     specifier: ~5.0.4
     version: 5.0.4
@@ -117,10 +132,10 @@ packages:
       '@babel/helpers': 7.23.6
       '@babel/parser': 7.23.6
       '@babel/template': 7.22.15
-      '@babel/traverse': 7.23.6(supports-color@5.5.0)
+      '@babel/traverse': 7.23.6
       '@babel/types': 7.23.6
       convert-source-map: 2.0.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -223,7 +238,7 @@ packages:
       '@babel/core': 7.23.6
       '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-plugin-utils': 7.22.5
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -353,7 +368,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/template': 7.22.15
-      '@babel/traverse': 7.23.6(supports-color@5.5.0)
+      '@babel/traverse': 7.23.6
       '@babel/types': 7.23.6
     transitivePeerDependencies:
       - supports-color
@@ -1471,6 +1486,23 @@ packages:
       '@babel/parser': 7.23.6
       '@babel/types': 7.23.6
 
+  /@babel/traverse@7.23.6:
+    resolution: {integrity: sha512-czastdK1e8YByZqezMPFiZ8ahwVMh/ESl9vPgvgdB9AmFMGP5jfpFax74AQgl5zj4XHzqeYAg2l8PuUeRS1MgQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/code-frame': 7.23.5
+      '@babel/generator': 7.23.6
+      '@babel/helper-environment-visitor': 7.22.20
+      '@babel/helper-function-name': 7.23.0
+      '@babel/helper-hoist-variables': 7.22.5
+      '@babel/helper-split-export-declaration': 7.22.6
+      '@babel/parser': 7.23.6
+      '@babel/types': 7.23.6
+      debug: 4.3.4(supports-color@9.3.1)
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
   /@babel/traverse@7.23.6(supports-color@5.5.0):
     resolution: {integrity: sha512-czastdK1e8YByZqezMPFiZ8ahwVMh/ESl9vPgvgdB9AmFMGP5jfpFax74AQgl5zj4XHzqeYAg2l8PuUeRS1MgQ==}
     engines: {node: '>=6.9.0'}
@@ -1487,6 +1519,7 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@babel/types@7.23.6:
     resolution: {integrity: sha512-+uarb83brBzPKN38NX1MkB6vb6+mwvR6amUulqAE7ccQw1pEl+bCia9TbdG1lsnFP7lZySvUn37CHyXQdfTwzg==}
@@ -1495,6 +1528,13 @@ packages:
       '@babel/helper-string-parser': 7.23.4
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+
+  /@cspotcode/source-map-support@0.8.1:
+    resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.9
+    dev: true
 
   /@dnd-kit/accessibility@3.1.0(react@18.2.0):
     resolution: {integrity: sha512-ea7IkhKvlJUv9iSHJOnxinBcoOI3ppGnnL+VDJ75O45Nss6HtZd8IdN8touXPDtASfeI2T2LImb8VOZcL47wjQ==}
@@ -1901,7 +1941,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.0
@@ -1974,7 +2014,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 2.0.1
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -2045,6 +2085,13 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  /@jridgewell/trace-mapping@0.3.9:
+    resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+    dependencies:
+      '@jridgewell/resolve-uri': 3.1.1
+      '@jridgewell/sourcemap-codec': 1.4.15
+    dev: true
 
   /@loadable/babel-plugin@5.15.3(@babel/core@7.23.6):
     resolution: {integrity: sha512-kwEsPxCk8vnwbTfbA4lHqT5t0u0czCQTnCcmOaTjxT5lCn7yZCBTBa9D7lHs+MLM2WyPsZlee3Qh0TTkMMi5jg==}
@@ -2194,7 +2241,7 @@ packages:
       redux: 4.2.1
     dev: false
 
-  /@modern-js/app-tools@2.42.1(@modern-js/builder-rspack-provider@2.42.1)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(typescript@5.0.4):
+  /@modern-js/app-tools@2.42.1(@modern-js/builder-rspack-provider@2.42.1)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-/KYRDYT5xmRHgijCS/J+3Qg9QV+MuGkNQfCHxLg+tLsPfhSHODuJQsuoN9RNOKiFdBeCxeJmYr4zqLoiBhI0RQ==}
     engines: {node: '>=14.17.6'}
     hasBin: true
@@ -2205,14 +2252,14 @@ packages:
         optional: true
     dependencies:
       '@babel/parser': 7.23.6
-      '@babel/traverse': 7.23.6(supports-color@5.5.0)
+      '@babel/traverse': 7.23.6
       '@babel/types': 7.23.6
-      '@modern-js/builder': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/builder-plugin-esbuild': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/builder-plugin-node-polyfill': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/builder-rspack-provider': 2.42.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/builder-webpack-provider': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(typescript@5.0.4)
+      '@modern-js/builder': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
+      '@modern-js/builder-plugin-esbuild': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
+      '@modern-js/builder-plugin-node-polyfill': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
+      '@modern-js/builder-rspack-provider': 2.42.1(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
+      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
+      '@modern-js/builder-webpack-provider': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
       '@modern-js/core': 2.42.1
       '@modern-js/new-action': 2.42.1(typescript@5.0.4)
       '@modern-js/node-bundle-require': 2.42.1
@@ -2221,7 +2268,7 @@ packages:
       '@modern-js/plugin-i18n': 2.42.1
       '@modern-js/plugin-lint': 2.42.1
       '@modern-js/prod-server': 2.42.1(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)
       '@modern-js/server-core': 2.42.1
       '@modern-js/types': 2.42.1
       '@modern-js/upgrade': 2.42.1
@@ -2278,11 +2325,11 @@ packages:
       resolve: 1.22.8
     dev: true
 
-  /@modern-js/builder-plugin-esbuild@2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@modern-js/builder-plugin-esbuild@2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-Pg0LxcQoOHWpFzZ6eZrLgzFxljx91/+objFr3dZZH8nK0xrtzJpuf1Z8mu1VdldCuJe+Pa78S6Me3s2Fs8Ik1w==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
       '@swc/helpers': 0.5.3
       esbuild: 0.17.19
     transitivePeerDependencies:
@@ -2308,11 +2355,11 @@ packages:
       - webpack-cli
     dev: true
 
-  /@modern-js/builder-plugin-node-polyfill@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@modern-js/builder-plugin-node-polyfill@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-Yy/DGxk9F8t4mwZEO1lcN7paobLM/a9GzQPRBnyTnBNF1XA5G/dgapPvz7Qo1zMHUoe0WsGrdO3GOAG3qozOUw==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
       '@swc/helpers': 0.5.3
       node-libs-browser: 2.2.1
     transitivePeerDependencies:
@@ -2339,14 +2386,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@modern-js/builder-rspack-provider@2.42.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@modern-js/builder-rspack-provider@2.42.1(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-mO8p9VruylK4yVk+G9suRvOjvxPbq7vi8gPatchyYA8ICLp8D4kGf0JQfwC98zB5+p59rbqkucFRKJI0SQxQgA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/core': 7.23.6
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.6)
-      '@modern-js/builder-shared': 2.42.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/builder-shared': 2.42.1(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
+      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)
       '@modern-js/types': 2.42.1
       '@modern-js/utils': 2.42.1
       '@rspack/core': 0.4.2
@@ -2384,7 +2431,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@modern-js/builder-shared@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@modern-js/builder-shared@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-XDESZ4texIcFH0PmtzpBf/7FVI9957WPUIoTkCNm+QT/0l6GvhMc/mHI8AossmyA3LgYKkMf5eBM9EBrZMQ0gw==}
     engines: {node: '>=14.0.0'}
     dependencies:
@@ -2392,7 +2439,7 @@ packages:
       '@babel/parser': 7.23.6
       '@babel/types': 7.23.6
       '@modern-js/prod-server': 2.42.1(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)
       '@modern-js/types': 2.42.1
       '@modern-js/utils': 2.42.1
       '@swc/helpers': 0.5.3
@@ -2433,7 +2480,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@modern-js/builder-shared@2.42.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@modern-js/builder-shared@2.42.1(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-XDESZ4texIcFH0PmtzpBf/7FVI9957WPUIoTkCNm+QT/0l6GvhMc/mHI8AossmyA3LgYKkMf5eBM9EBrZMQ0gw==}
     engines: {node: '>=14.0.0'}
     dependencies:
@@ -2441,7 +2488,7 @@ packages:
       '@babel/parser': 7.23.6
       '@babel/types': 7.23.6
       '@modern-js/prod-server': 2.42.1(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)
       '@modern-js/types': 2.42.1
       '@modern-js/utils': 2.42.1
       '@swc/helpers': 0.5.3
@@ -2482,15 +2529,15 @@ packages:
       - webpack-cli
     dev: true
 
-  /@modern-js/builder-webpack-provider@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(typescript@5.0.4):
+  /@modern-js/builder-webpack-provider@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.1)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-3Ln9ampGWwZawXVsMYaT1YlVlp8vb2xXuu5qROmacfZU0jfYaVb81PoqFDYupHOmsM9sZmsdBScqU585EPAnAA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@babel/core': 7.23.6
       '@babel/preset-react': 7.23.3(@babel/core@7.23.6)
-      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
       '@modern-js/inspector-webpack-plugin': 1.0.6
-      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)
+      '@modern-js/server': 2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)
       '@modern-js/types': 2.42.1
       '@modern-js/utils': 2.42.1
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
@@ -2541,11 +2588,11 @@ packages:
       - webpack-plugin-serve
     dev: true
 
-  /@modern-js/builder@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@modern-js/builder@2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-Z/N84iyrito6g5jF3nNFY1cHmk4eVElfWjcAAUx7Hix/Tw5QOYPRcqLa4zps7zFDaRIYs6sZJXO2wOH/Ua+JHQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@modern-js/builder-shared': 2.42.1(@babel/traverse@7.23.6)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0)(typescript@5.0.4)
       '@modern-js/utils': 2.42.1
       '@rsbuild/monorepo-utils': 0.0.7
       '@svgr/webpack': 8.0.1(typescript@5.0.4)
@@ -2832,7 +2879,7 @@ packages:
       - supports-color
     dev: true
 
-  /@modern-js/server@2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0):
+  /@modern-js/server@2.42.1(@babel/traverse@7.23.6)(react-dom@18.2.0)(react@18.2.0)(ts-node@10.9.2)(tsconfig-paths@4.2.0):
     resolution: {integrity: sha512-5RB5WA9PI/t68L5m6ovN5H9bLZkLztyyFjIGymMysf4AHizrBau3N+F5oCRaQHiWFao2+/CZMWpYdTXi8KXB7Q==}
     peerDependencies:
       devcert: ^1.0.0
@@ -2859,6 +2906,8 @@ packages:
       http-compression: 1.0.6
       minimatch: 3.1.2
       path-to-regexp: 6.2.1
+      ts-node: 10.9.2(@types/node@16.11.68)(typescript@5.0.4)
+      tsconfig-paths: 4.2.0
       ws: 8.15.1
     transitivePeerDependencies:
       - '@babel/traverse'
@@ -3392,6 +3441,22 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
+  /@tsconfig/node10@1.0.9:
+    resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
+    dev: true
+
+  /@tsconfig/node12@1.0.11:
+    resolution: {integrity: sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==}
+    dev: true
+
+  /@tsconfig/node14@1.0.3:
+    resolution: {integrity: sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==}
+    dev: true
+
+  /@tsconfig/node16@1.0.4:
+    resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
+    dev: true
+
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
     dependencies:
@@ -3509,6 +3574,16 @@ packages:
       '@types/react': 18.0.38
     dev: false
 
+  /@types/lodash-es@4.17.12:
+    resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
+    dependencies:
+      '@types/lodash': 4.14.202
+    dev: true
+
+  /@types/lodash@4.14.202:
+    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+    dev: true
+
   /@types/node@16.11.68:
     resolution: {integrity: sha512-JkRpuVz3xCNCWaeQ5EHLR/6woMbHZz/jZ7Kmc63AkU+1HxnoUugzSWMck7dsR4DvNYX8jp9wTi9K7WvnxOIQZQ==}
 
@@ -3585,7 +3660,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/type-utils': 5.62.0(eslint@8.55.0)(typescript@5.0.4)
       '@typescript-eslint/utils': 5.62.0(eslint@8.55.0)(typescript@5.0.4)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       eslint: 8.55.0
       graphemer: 1.4.0
       ignore: 5.3.0
@@ -3610,7 +3685,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.0.4)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       eslint: 8.55.0
       typescript: 5.0.4
     transitivePeerDependencies:
@@ -3637,7 +3712,7 @@ packages:
     dependencies:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.0.4)
       '@typescript-eslint/utils': 5.62.0(eslint@8.55.0)(typescript@5.0.4)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       eslint: 8.55.0
       tsutils: 3.21.0(typescript@5.0.4)
       typescript: 5.0.4
@@ -3661,7 +3736,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
@@ -3829,6 +3904,11 @@ packages:
       acorn: 8.11.2
     dev: true
 
+  /acorn-walk@8.3.1:
+    resolution: {integrity: sha512-TgUZgYvqZprrl7YldZNoa9OciCAyZR+Ejm9eXzKCmjsF5IKp/wgQ7Z/ZpjpGTIUPwrHQIcYeI8qDh4PsEwxMbw==}
+    engines: {node: '>=0.4.0'}
+    dev: true
+
   /acorn@8.11.2:
     resolution: {integrity: sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w==}
     engines: {node: '>=0.4.0'}
@@ -3943,6 +4023,10 @@ packages:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+    dev: true
+
+  /arg@4.1.3:
+    resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
     dev: true
 
   /argparse@2.0.1:
@@ -4187,7 +4271,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.6
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/traverse': 7.23.6(supports-color@5.5.0)
+      '@babel/traverse': 7.23.6
     dev: true
 
   /balanced-match@1.0.2:
@@ -4740,6 +4824,10 @@ packages:
       sha.js: 2.4.11
     dev: true
 
+  /create-require@1.1.1:
+    resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
+    dev: true
+
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -5025,6 +5113,7 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 5.5.0
+    dev: false
 
   /debug@4.3.4(supports-color@9.3.1):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -5037,7 +5126,6 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 9.3.1
-    dev: true
 
   /decimal.js@10.4.3:
     resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
@@ -5100,6 +5188,11 @@ packages:
   /diff-sequences@29.6.3:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dev: true
+
+  /diff@4.0.2:
+    resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
+    engines: {node: '>=0.3.1'}
     dev: true
 
   /diffie-hellman@5.0.3:
@@ -5670,7 +5763,7 @@ packages:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@9.3.1)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -6954,6 +7047,10 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
   /lodash._reinterpolate@3.0.0:
     resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
     dev: true
@@ -7062,6 +7159,10 @@ packages:
     dependencies:
       semver: 6.3.1
     dev: false
+
+  /make-error@1.3.6:
+    resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
+    dev: true
 
   /mathjs@12.2.0:
     resolution: {integrity: sha512-lEoZ3OtOno1dxta5xHnPOwPI+z94/+NX70JwaJynHosKdq10wJ4InYadxXaHM19ALr/UZbmTixFS7F4ufJnazg==}
@@ -7256,7 +7357,6 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: true
 
   /natural-compare-lite@1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
@@ -8898,7 +8998,6 @@ packages:
   /supports-color@9.3.1:
     resolution: {integrity: sha512-knBY82pjmnIzK3NifMo3RxEIRD9E0kIzV4BKcyTZ9+9kWgLMxd4PrsTSMoFQUabgRBbF8KOLRDCyKgNV+iK44Q==}
     engines: {node: '>=12'}
-    dev: true
 
   /supports-hyperlinks@2.3.0:
     resolution: {integrity: sha512-RpsAZlpWcDwOPQA22aCH4J0t7L8JmAvsCxfOSEwm7cQs3LshN36QaTkwd70DnBOXDWGssw2eUoc8CaRWT0XunA==}
@@ -9071,6 +9170,37 @@ packages:
       semver: 7.5.4
       typescript: 5.0.4
       webpack: 5.89.0(esbuild@0.17.19)
+    dev: true
+
+  /ts-node@10.9.2(@types/node@16.11.68)(typescript@5.0.4):
+    resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      '@swc/wasm':
+        optional: true
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.9
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 16.11.68
+      acorn: 8.11.2
+      acorn-walk: 8.3.1
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.0.4
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
     dev: true
 
   /tsconfig-paths-webpack-plugin@4.1.0:
@@ -9294,6 +9424,10 @@ packages:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
     dev: false
+
+  /v8-compile-cache-lib@3.0.1:
+    resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
+    dev: true
 
   /vm-browserify@1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
@@ -9561,6 +9695,11 @@ packages:
   /yaml@2.3.4:
     resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
+    dev: true
+
+  /yn@3.1.1:
+    resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
+    engines: {node: '>=6'}
     dev: true
 
   /yocto-queue@0.1.0:

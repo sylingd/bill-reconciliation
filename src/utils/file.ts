@@ -1,10 +1,10 @@
 export function loadFile(formatToFilter: string): Promise<File> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const fileInput = document.createElement('input');
     fileInput.style.display = 'none';
     fileInput.type = 'file';
     fileInput.accept = formatToFilter || '.json';
-    // @ts-ignore
+    // @ts-expect-error
     fileInput.acceptCharset = 'utf8';
 
     document.body.appendChild(fileInput);
@@ -22,13 +22,14 @@ export function loadFile(formatToFilter: string): Promise<File> {
   });
 }
 
-export function readFileText(file: File): Promise<string> {
-  return new Promise((resolve) => {
+export function readFileText(file: File, encoding = 'UTF-8'): Promise<string> {
+  return new Promise((resolve, reject) => {
     const fReader = new FileReader();
-    fReader.readAsText(file);
-    fReader.onloadend = (event) => {
+    fReader.onerror = err => reject(err);
+    fReader.onloadend = event => {
       const result = event.target!.result as string;
       resolve(result || '');
     };
+    fReader.readAsText(file, encoding);
   });
 }
