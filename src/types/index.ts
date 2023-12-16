@@ -26,3 +26,17 @@ export interface IRecordItem {
   money: string;
   remark: string;
 }
+
+export interface IBillAppConfig {
+  key: string;
+  name: string;
+  picker: () => Promise<File>;
+  parser: (file: File) => Promise<IBillItem[]>;
+}
+
+export interface IRecordAppConfig {
+  key: string;
+  name: string;
+  picker: () => Promise<File>;
+  parser: (file: File) => Promise<IRecordItem[]>;
+}

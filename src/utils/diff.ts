@@ -1,4 +1,3 @@
-import { first, last } from 'lodash-es';
 import { Idle } from './idle';
 import { findBreakPoint } from './arr';
 import { BillType, IBillItem, IRecordItem } from '@/types';
@@ -91,9 +90,6 @@ export async function billDiff(
   const matchedLargeRecord = new Set<IRecordItem>();
 
   // 从小的开始查找，优先找到匹配度最高的
-  // let lastLargeIndex = 0;
-  // let lastSmallIndex = 0;
-  // let lastScore = Number.MAX_SAFE_INTEGER;
   const largeRange = {
     start: 0,
     end: 0,
@@ -137,7 +133,7 @@ export async function billDiff(
       });
     const firstScore = recordScores[0];
     // 如果分数太大，说明差太多了，就不要了
-    if (firstScore && firstScore.score > MAX_SCORE) {
+    if (firstScore && firstScore.score <= MAX_SCORE) {
       matchedLargeRecord.add(firstScore.record);
       result.push({
         score: firstScore.score,
@@ -155,39 +151,19 @@ export async function billDiff(
     }
   }
 
-  // TODO: 完善后面的流程
-  console.log('test');
-
   // 把剩下的数据加回去
-  // 特殊处理首尾的插入
-  const firstTime = first(largeRecord)!.time;
-  const largeStartIndex = findBreakPoint(result, v => v.time > firstTime);
-  const lastTime = last(result)?.time;
-  let largeEndIndex = largeRecord.length - 1;
-  if (lastTime) {
-    largeEndIndex = findBreakPoint(largeRecord, v => v.time > lastTime);
-  }
-  result.splice(
-    0,
-    0,
-    ...largeRecord.slice(0, largeStartIndex).map(x => ({
-      score: Number.MAX_SAFE_INTEGER,
-      time: x.time,
-      [isBillLarge ? 'bill' : 'record']: x,
-    })),
-  );
-  result.push(
-    ...largeRecord.slice(largeEndIndex).map(x => ({
-      score: Number.MAX_SAFE_INTEGER,
-      time: x.time,
-      [isBillLarge ? 'bill' : 'record']: x,
-    })),
-  );
-  for (let i = largeStartIndex; i < largeEndIndex; i++) {
-    const it = largeRecord[i];
+  for (const it of largeRecord) {
+    if (idle.shouldIdle()) {
+      await idle.sleep();
+    }
     if (!matchedLargeRecord.has(it)) {
       matchedLargeRecord.add(it);
-      // const index = findBreakPoint(result, v => v.time > it.time);
+      const index = findBreakPoint(result, v => v.time < it.time);
+      result.splice(index, 0, {
+        score: Number.MAX_SAFE_INTEGER,
+        time: it.time,
+        [isBillLarge ? 'bill' : 'record']: it,
+      });
     }
   }
 
