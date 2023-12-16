@@ -1,5 +1,7 @@
 import { appTools, defineConfig } from '@modern-js/app-tools';
 
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 // https://modernjs.dev/en/configure/app/usage
 export default defineConfig<'rspack'>({
   runtime: {
@@ -24,14 +26,18 @@ export default defineConfig<'rspack'>({
       {
         tag: 'script',
         attrs: {
-          src: 'https://unpkg.byted-static.com/react/18.2.0/umd/react.production.min.js',
+          src: `https://unpkg.byted-static.com/react/18.2.0/umd/${
+            IS_DEV ? 'react.development.js' : 'react.production.min.js'
+          }`,
         },
         head: true,
       },
       {
         tag: 'script',
         attrs: {
-          src: 'https://unpkg.byted-static.com/react-dom/18.2.0/umd/react-dom.production.min.js',
+          src: `https://unpkg.byted-static.com/react-dom/18.2.0/umd/${
+            IS_DEV ? 'react-dom.development.js' : 'react-dom.production.min.js'
+          }`,
         },
         head: true,
       },
@@ -62,13 +68,6 @@ export default defineConfig<'rspack'>({
         attrs: {
           rel: 'stylesheet',
           href: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.48.0/dist/css/semi-icons.css',
-        },
-        head: true,
-      },
-      {
-        tag: 'script',
-        attrs: {
-          src: 'https://unpkg.byted-static.com/mathjs/12.2.0/lib/browser/math.js',
         },
         head: true,
       },

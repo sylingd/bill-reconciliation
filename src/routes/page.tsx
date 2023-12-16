@@ -14,6 +14,7 @@ import { billDiff, prepareBillRecord } from '@/utils/diff';
 import { IBillAppConfig, IRecordAppConfig } from '@/types';
 import { billApps, recordApps } from '@/parser';
 import './index.css';
+import { BillTypeName } from '@/constant';
 
 const Index = () => {
   const [recordAccount, setRecordAccount] = useState('');
@@ -31,9 +32,12 @@ const Index = () => {
     data: recordData,
     loading: loadingRecordData,
     run: parseRecordData,
-  } = useRequest((file: File, app: IRecordAppConfig) => app.parser(file), {
-    manual: true,
-  });
+  } = useRequest(
+    (file: File, app: IRecordAppConfig) => app.parser(file, recordAccount),
+    {
+      manual: true,
+    },
+  );
 
   const { data: diffData, loading: loadingDiffData } = useRequest(
     async () => {
@@ -65,6 +69,8 @@ const Index = () => {
       value: x,
     }));
   }, [billData]);
+
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
   return (
     <div>
@@ -130,9 +136,15 @@ const Index = () => {
       </Card>
       <Table
         className="diff-table"
+        rowKey="id"
         loading={loadingDiffData}
         size="small"
         dataSource={diffData}
+        rowSelection={{
+          selectedRowKeys: selectedKeys,
+          onChange: keys => setSelectedKeys(keys as string[]),
+        }}
+        virtualized
         columns={[
           {
             title: '时间',
@@ -142,6 +154,13 @@ const Index = () => {
           {
             title: '记账-类型',
             dataIndex: 'bill.type',
+            render: (_, rec) => {
+              if (!rec.bill) {
+                return '';
+              }
+              const it = billData?.find(x => x.id === rec.bill!.id);
+              return it ? BillTypeName[it.type] : '';
+            },
           },
           {
             title: '记账-金额',

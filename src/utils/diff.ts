@@ -1,8 +1,10 @@
 import { Idle } from './idle';
 import { findBreakPoint } from './arr';
 import { BillType, IBillItem, IRecordItem } from '@/types';
+import { BillTypeName } from '@/constant';
 
 interface IBillDiffResult {
+  id: string;
   score: number;
   time: number;
   bill?: IRecordItem;
@@ -33,6 +35,7 @@ export async function prepareBillRecord(
       // 这两个只有单个账户，可以直接原样记录
       result.push({
         id: item.id,
+        account: accountName,
         type: item.type,
         time: item.time,
         money: item.money,
@@ -44,9 +47,10 @@ export async function prepareBillRecord(
     result.push({
       id: item.id,
       type: item.account1 === accountName ? BillType.EXPENSE : BillType.INCOME,
+      account: accountName,
       time: item.time,
       money: item.money,
-      remark: `${item.type}-${item.category}-${item.remark}`,
+      remark: `${BillTypeName[item.type]}-${item.category}-${item.remark}`,
     });
   }
 
@@ -102,19 +106,19 @@ export async function billDiff(
     // 只在最近两天的数据里查找
     largeRange.start = findBreakPoint(
       largeRecord,
-      v => Math.abs(v.time - smallRec.time) < TWO_DAY_SECONDS,
+      v => smallRec.time < TWO_DAY_SECONDS + v.time,
       largeRange.start,
     );
     largeRange.end = findBreakPoint(
       largeRecord,
-      v => Math.abs(v.time - smallRec.time) > TWO_DAY_SECONDS,
+      v => v.time < smallRec.time - TWO_DAY_SECONDS,
       Math.max(largeRange.start, largeRange.end),
     );
     // 找到得分最小的几个
     const recordScores = new Array(largeRange.end - largeRange.start + 1)
       .fill(null)
       .map((_, index) => {
-        const rec = bill[largeRange.start + index];
+        const rec = largeRecord[largeRange.start + index];
         // 金额完全相同，且时间差异在2m以内，可以当做完全相同
         const fullMatch =
           Number(rec.money) === Number(smallRec.money) &&
@@ -136,6 +140,7 @@ export async function billDiff(
     if (firstScore && firstScore.score <= MAX_SCORE) {
       matchedLargeRecord.add(firstScore.record);
       result.push({
+        id: `${firstScore.record.id}_${smallRec.id}`,
         score: firstScore.score,
         time: firstScore.record.time,
         [isBillLarge ? 'bill' : 'record']: firstScore.record,
@@ -144,6 +149,7 @@ export async function billDiff(
     } else {
       // 没有匹配结果
       result.push({
+        id: `~NONE~_${smallRec.id}`,
         score: Number.MAX_SAFE_INTEGER,
         time: smallRec.time,
         [isBillLarge ? 'record' : 'bill']: smallRec,
@@ -160,6 +166,7 @@ export async function billDiff(
       matchedLargeRecord.add(it);
       const index = findBreakPoint(result, v => v.time < it.time);
       result.splice(index, 0, {
+        id: `${it.id}_~NONE~`,
         score: Number.MAX_SAFE_INTEGER,
         time: it.time,
         [isBillLarge ? 'bill' : 'record']: it,

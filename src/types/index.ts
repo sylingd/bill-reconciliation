@@ -21,6 +21,7 @@ export interface IBillItem {
 
 export interface IRecordItem {
   id: string;
+  account: string;
   type: BillType;
   time: number;
   money: string;
@@ -38,5 +39,5 @@ export interface IRecordAppConfig {
   key: string;
   name: string;
   picker: () => Promise<File>;
-  parser: (file: File) => Promise<IRecordItem[]>;
+  parser: (file: File, account: string) => Promise<IRecordItem[]>;
 }
