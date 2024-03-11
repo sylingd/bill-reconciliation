@@ -35,6 +35,7 @@ jobs:
         npm run build
         rm -f $GITHUB_WORKSPACE/dist/*.json
         mv $GITHUB_WORKSPACE/dist/html/main/index.html $GITHUB_WORKSPACE/dist/index.html
+        echo "bill-reconciliation.sylibs.com" > $GITHUB_WORKSPACE/dist/CNAME
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
