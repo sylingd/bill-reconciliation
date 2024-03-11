@@ -21,6 +21,7 @@ export default defineConfig<'rspack'>({
       mathjs: 'math',
     },
     enableAssetManifest: false,
+    disableSourceMap: true,
   },
   html: {
     tags: [
