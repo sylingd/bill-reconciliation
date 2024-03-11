@@ -35,6 +35,10 @@ const Result = () => {
             render: v => dayjs(v * 1000).format('YYYY-MM-DD HH:mm:ss'),
           },
           {
+            title: '记账-ID',
+            dataIndex: 'bill.id',
+          },
+          {
             title: '记账-类型',
             dataIndex: 'bill.type',
             render: (_, rec) => {
@@ -58,6 +62,10 @@ const Result = () => {
           {
             title: '记账-备注',
             dataIndex: 'bill.remark',
+          },
+          {
+            title: '账单-ID',
+            dataIndex: 'record.id',
           },
           {
             title: '账单-类型',
@@ -88,6 +96,11 @@ const Result = () => {
           if (!row?.record) {
             return {
               className: 'diff-remove',
+            };
+          }
+          if (row.score > 200) {
+            return {
+              className: 'diff-high',
             };
           }
           return {};

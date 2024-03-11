@@ -69,7 +69,8 @@ function renderStatus(status: RecordStatus) {
 }
 
 const Record = () => {
-  const { recordStatus, onGetFormApi, formOnChange, account } = useStore();
+  const { recordStatus, onGetFormApi, formOnChange, account, setRecordStatus } =
+    useStore();
 
   return (
     <Card title="第二步：选择账单（可多选）">
@@ -89,7 +90,14 @@ const Record = () => {
                     field={`${field}.account`}
                     optionList={account}
                   />
-                  <Button onClick={remove}>移除</Button>
+                  <Button
+                    onClick={() => {
+                      remove();
+                      setRecordStatus(index, null);
+                    }}
+                  >
+                    移除
+                  </Button>
                 </Space>
               ))}
               <Button onClick={() => addWithInitValue({})}>添加更多</Button>

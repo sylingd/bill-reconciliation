@@ -11,9 +11,9 @@ interface IBillDiffResult {
   record?: IRecordItem;
 }
 
-const MONEY_WEIGHT = 5;
+const MONEY_WEIGHT = 10;
 const TIME_WEIGHT = 1;
-const MAX_SCORE = 10000;
+const MAX_SCORE = 5000;
 
 /**
  * diff 前的数据预处理
@@ -87,7 +87,21 @@ export function calcScore(bill: IRecordItem, record: IRecordItem) {
 }
 
 const TWO_DAY_SECONDS = 172800;
-// 对两个数据进行 diff，产生新的数据
+/**
+ * 对两个数据进行 diff，产生新的数据
+ * 假设分别为A、B两个数组，其中A数组数量更多
+ * 对B数组中的每一项，称为item:
+ * 1. 确定item对应A数组的范围（与item首尾差在2天以内的数据）
+ * 2. 分别计算A数组在该范围内所有项目与item的差异分值
+ *  2.1 如果金额完全相同，时间差在2min以内，视为完全相同
+ *  2.2 否则，视为非完全相同
+ * 3. 按差异分值从低到高排序，其中完全相同的项目排在最前
+ * 4. 将匹配度最高的，且差异分值小于MAX_SCORE的，当做与item相同的条目（称为target）
+ * 5. 【TODO】回溯之前已经进行过的匹配
+ *  5.1 如target未使用过，不处理
+ *  5.2 如target已使用：
+ *   5.2.1 target对应的条目匹配度更高（差异分值更小），则item尝试使用次一条匹配的，否则回溯修改target现在对应的条目
+ */
 export async function billDiff(
   bill: IRecordItem[],
   record: IRecordItem[],
