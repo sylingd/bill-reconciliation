@@ -98,7 +98,7 @@ const Result = () => {
               className: 'diff-remove',
             };
           }
-          if (row.score > 200) {
+          if (row?.score > 200) {
             return {
               className: 'diff-high',
             };
