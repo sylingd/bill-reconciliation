@@ -20,6 +20,7 @@ export default defineConfig<'rspack'>({
       '@douyinfe/semi-icons': 'SemiIcons',
       mathjs: 'math',
     },
+    enableAssetManifest: false,
   },
   html: {
     tags: [
@@ -44,7 +45,9 @@ export default defineConfig<'rspack'>({
       {
         tag: 'script',
         attrs: {
-          src: 'https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/umd/semi-ui.min.js',
+          src: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/umd/${
+            IS_DEV ? 'semi-ui.js' : 'semi-ui.min.js'
+          }`,
         },
         head: true,
       },
@@ -52,7 +55,9 @@ export default defineConfig<'rspack'>({
         tag: 'link',
         attrs: {
           rel: 'stylesheet',
-          href: 'https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/css/semi.css',
+          href: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/css/${
+            IS_DEV ? 'semi.css' : 'semi.min.css'
+          }`,
         },
         head: true,
       },

@@ -9,8 +9,10 @@ import {
   useRef,
   useState,
 } from 'react';
+import { Toast } from '@douyinfe/semi-ui';
 import { IBillAppConfig, IRecordItem } from '@/types';
 import { recordApps } from '@/parser';
+import { billDiff, prepareBillRecord } from '@/utils/diff';
 
 interface FormValue {
   record: Array<{
@@ -20,9 +22,13 @@ interface FormValue {
   }>;
 }
 
-type RecordStatus = Error | IRecordItem[] | 'loading' | null;
+export type RecordStatus = Error | IRecordItem[] | 'loading' | null;
 const useModel = () => {
   const formApi = useRef<FormApi>();
+  const onGetFormApi = useCallback(
+    (api: FormApi) => (formApi.current = api),
+    [],
+  );
 
   const [recordStatus, _setRecordStatus] = useState<Array<RecordStatus>>([]);
   const setRecordStatus = useCallback((index: number, value: RecordStatus) => {
@@ -33,6 +39,7 @@ const useModel = () => {
     });
   }, []);
 
+  // 解析出来的记账软件账单数据，只有一个文件
   const {
     data: billData,
     loading: loadingBillData,
@@ -71,7 +78,7 @@ const useModel = () => {
   }, [billData]);
 
   const formOnChange: BaseFormProps['onValueChange'] = useCallback(
-    (_: any, changedValues: any) => {
+    (values: any, changedValues: any) => {
       const keys = Object.keys(changedValues)
         .filter(
           x =>
@@ -84,9 +91,7 @@ const useModel = () => {
         .map(x => Number(x![1]));
       const changedIndex = uniq(keys);
       changedIndex.forEach(index => {
-        const file = formApi.current?.getValue(`record[${index}].file`);
-        const account = formApi.current?.getValue(`record[${index}].account`);
-        const type = formApi.current?.getValue(`record[${index}].type`);
+        const { file, account, type } = values.record[index];
         const parser = recordApps.find(x => x.key === type);
         if (!file || !account || !type || !parser) {
           setRecordStatus(index, null);
@@ -106,20 +111,38 @@ const useModel = () => {
     data: diffData,
     loading: loadingDiffData,
     run: doDiff,
-  } = useRequest(async () => {
-    // console.log('doDiff', billData, recordData);
-    // if (!billData || !recordData || !recordAccount) {
-    //   return [];
-    // }
-    // const rec = await prepareBillRecord(recordAccount, billData);
-    // console.log('prepareBillRecord', rec);
-    // const res = await billDiff(rec, recordData);
-    // console.log('billDiff', res);
-    // return res;
-  });
+  } = useRequest(
+    async () => {
+      console.log('doDiff', billData, recordStatus);
+      if (!billData) {
+        throw new Error('没有记账数据');
+      }
+      const records = recordStatus.filter(
+        x => Array.isArray(x) && x.length > 0,
+      ) as Array<Array<IRecordItem>>;
+      if (!billData || records.length === 0) {
+        throw new Error('没有对比账单');
+      }
+      const accounts = formApi.current
+        ?.getValue('record')
+        .map((x: any) => x.account);
+      const rec = await prepareBillRecord(accounts, billData);
+      console.log('prepareBillRecord', rec);
+      const recordData = records
+        .reduce((a, b) => [...a, ...b], [])
+        .sort((a, b) => b.time - a.time);
+      const res = await billDiff(rec, recordData);
+      console.log('billDiff', res);
+      return res;
+    },
+    {
+      manual: true,
+      onError: e => Toast.error(e.message),
+    },
+  );
 
   return {
-    formApi,
+    onGetFormApi,
     formOnChange,
     recordStatus,
     setRecordStatus,

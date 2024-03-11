@@ -15,9 +15,14 @@ const MONEY_WEIGHT = 5;
 const TIME_WEIGHT = 1;
 const MAX_SCORE = 10000;
 
-// diff 前的数据预处理
+/**
+ * diff 前的数据预处理
+ * 做了两件事：
+ * 1. 根据accountName，筛选出相关的记录
+ * 2. 将记录转为IRecordItem的格式
+ */
 export async function prepareBillRecord(
-  accountName: string,
+  accountNames: string[],
   bill: IBillItem[],
 ) {
   const result: IRecordItem[] = [];
@@ -28,7 +33,14 @@ export async function prepareBillRecord(
       await idle.sleep();
     }
     const item = bill[i];
-    if (item.account1 !== accountName && item.account2 !== accountName) {
+    let accountName = '';
+    if (accountNames.includes(item.account1)) {
+      accountName = item.account1;
+    }
+    if (accountNames.includes(item.account2)) {
+      accountName = item.account2;
+    }
+    if (!accountName) {
       continue;
     }
     if (item.type === BillType.INCOME || item.type === BillType.EXPENSE) {
