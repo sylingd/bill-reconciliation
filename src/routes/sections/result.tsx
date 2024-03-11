@@ -22,7 +22,12 @@ const Result = () => {
           selectedRowKeys: selectedKeys,
           onChange: keys => setSelectedKeys(keys as string[]),
         }}
-        virtualized
+        virtualized={{
+          itemSize: 37,
+        }}
+        scroll={{
+          y: 500,
+        }}
         columns={[
           {
             title: '时间',

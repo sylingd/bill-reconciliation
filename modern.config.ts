@@ -9,7 +9,7 @@ export default defineConfig<'rspack'>({
   },
   plugins: [
     appTools({
-      bundler: 'webpack',
+      bundler: 'experimental-rspack',
     }),
   ],
   output: {
