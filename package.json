@@ -25,10 +25,10 @@
     "dist/"
   ],
   "dependencies": {
-    "@douyinfe/semi-icons": "^2.48.0",
-    "@douyinfe/semi-ui": "^2.48.0",
+    "@douyinfe/semi-icons": "^2.54.1",
+    "@douyinfe/semi-ui": "^2.54.1",
     "@emotion/css": "^11.11.2",
-    "@modern-js/runtime": "2.42.1",
+    "@modern-js/runtime": "2.48.0",
     "ahooks": "^3.7.8",
     "dayjs": "^1.11.10",
     "lodash-es": "^4.17.21",
@@ -40,11 +40,11 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@modern-js-app/eslint-config": "2.42.1",
-    "@modern-js/app-tools": "2.42.1",
-    "@modern-js/builder-rspack-provider": "2.42.1",
-    "@modern-js/eslint-config": "2.42.1",
-    "@modern-js/tsconfig": "2.42.1",
+    "@modern-js-app/eslint-config": "2.48.0",
+    "@modern-js/app-tools": "2.48.0",
+    "@modern-js/builder-rspack-provider": "2.46.1",
+    "@modern-js/eslint-config": "2.48.0",
+    "@modern-js/tsconfig": "2.48.0",
     "@types/jest": "~29.2.4",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "~16.11.7",

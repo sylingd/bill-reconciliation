@@ -45,7 +45,7 @@ export default defineConfig<'rspack'>({
       {
         tag: 'script',
         attrs: {
-          src: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/umd/${
+          src: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.54.1/dist/umd/${
             IS_DEV ? 'semi-ui.js' : 'semi-ui.min.js'
           }`,
         },
@@ -55,7 +55,7 @@ export default defineConfig<'rspack'>({
         tag: 'link',
         attrs: {
           rel: 'stylesheet',
-          href: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.48.0/dist/css/${
+          href: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.54.1/dist/css/${
             IS_DEV ? 'semi.css' : 'semi.min.css'
           }`,
         },
