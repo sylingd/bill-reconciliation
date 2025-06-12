@@ -1,3 +1,10 @@
+import { billApps, recordApps } from '@/parser';
+import type { IBillAppConfig, IRecordAppConfig } from '@/types';
+import {
+  type IBillDiffResult,
+  billDiff,
+  prepareBillRecord,
+} from '@/utils/diff';
 import {
   Button,
   Card,
@@ -9,15 +16,13 @@ import {
 } from '@douyinfe/semi-ui';
 import { useRequest } from 'ahooks';
 import dayjs from 'dayjs';
-import { useMemo, useState } from 'react';
-import { billDiff, prepareBillRecord } from '@/utils/diff';
-import { IBillAppConfig, IRecordAppConfig } from '@/types';
-import { billApps, recordApps } from '@/parser';
+import { useEffect, useMemo, useState } from 'react';
 import './index.css';
 import { BillTypeName } from '@/constant';
 
 const Index = () => {
   const [recordAccount, setRecordAccount] = useState('');
+  const [scrollY, setScrollY] = useState(0);
 
   const {
     data: billData,
@@ -72,68 +77,100 @@ const Index = () => {
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
+  useEffect(() => {
+    let t: number | undefined = undefined;
+    const updateScrollY = () => {
+      if (t) {
+        return;
+      }
+      t = requestAnimationFrame(() => {
+        const dom = document.querySelector('.diff-table') as HTMLDivElement;
+        setScrollY(dom.offsetHeight - 38);
+        t = undefined;
+      });
+    };
+    updateScrollY();
+    window.addEventListener('resize', updateScrollY);
+    return () => {
+      window.removeEventListener('resize', updateScrollY);
+    };
+  }, []);
+
   return (
-    <div>
-      <Card
-        title={
-          <Space>
-            <Tag color={billData ? 'green' : 'red'}>
-              {billData ? '已' : '未'}选择
-            </Tag>
-            <span>第一步：选择记账软件</span>
-          </Space>
-        }
-      >
-        <Spin spinning={loadingBillData}>
-          <Space>
-            {billApps.map(x => (
-              <Button
-                key={x.key}
-                onClick={async () => {
-                  const f = await x.picker();
-                  parseBillData(f, x);
-                }}
-              >
-                {x.name}
-              </Button>
-            ))}
-          </Space>
-        </Spin>
-      </Card>
-      <Card
-        title={
-          <Space>
-            <Tag color={recordData ? 'green' : 'red'}>
-              {recordData ? '已' : '未'}选择
-            </Tag>
-            <span>第二步：选择导出账单</span>
-            <Select
-              disabled={!billData}
-              placeholder="选择对应的账户名"
-              value={recordAccount}
-              onChange={v => setRecordAccount(v as string)}
-              optionList={accounts}
-            />
-          </Space>
-        }
-      >
-        <Spin spinning={loadingRecordData}>
-          <Space>
-            {recordApps.map(x => (
-              <Button
-                key={x.key}
-                disabled={!billData}
-                onClick={async () => {
-                  const f = await x.picker();
-                  parseRecordData(f, x);
-                }}
-              >
-                {x.name}
-              </Button>
-            ))}
-          </Space>
-        </Spin>
-      </Card>
+    <div className="page-diff">
+      <div className="setup">
+        <Card
+          title={
+            <Space>
+              <Tag color={billData ? 'green' : 'red'}>
+                {billData ? '已' : '未'}选择
+              </Tag>
+              <span>第一步：选择记账软件</span>
+            </Space>
+          }
+        >
+          <Spin spinning={loadingBillData}>
+            <Space>
+              {billApps.map(x => (
+                <Button
+                  key={x.key}
+                  onClick={async () => {
+                    const f = await x.picker();
+                    parseBillData(f, x);
+                  }}
+                >
+                  {x.name}
+                </Button>
+              ))}
+            </Space>
+          </Spin>
+        </Card>
+        <Card
+          title={
+            <Space>
+              <Tag color={recordAccount ? 'green' : 'red'}>
+                {recordAccount ? '已' : '未'}选择
+              </Tag>
+              <span>第二步：选择账户</span>
+            </Space>
+          }
+        >
+          <Select
+            disabled={!billData}
+            placeholder="选择对应的账户名"
+            value={recordAccount}
+            onChange={v => setRecordAccount(v as string)}
+            optionList={accounts}
+          />
+        </Card>
+        <Card
+          title={
+            <Space>
+              <Tag color={recordData ? 'green' : 'red'}>
+                {recordData ? '已' : '未'}选择
+              </Tag>
+              <span>第三步：选择导出账单</span>
+            </Space>
+          }
+        >
+          <Spin spinning={loadingRecordData}>
+            <Space>
+              {recordApps.map(x => (
+                <Button
+                  key={x.key}
+                  disabled={!billData}
+                  onClick={async () => {
+                    const f = await x.picker();
+                    parseRecordData(f, x);
+                  }}
+                >
+                  {x.name}
+                </Button>
+              ))}
+            </Space>
+          </Spin>
+        </Card>
+      </div>
       <Table
         className="diff-table"
         rowKey="id"
@@ -145,6 +182,10 @@ const Index = () => {
           onChange: keys => setSelectedKeys(keys as string[]),
         }}
         virtualized
+        pagination={false}
+        scroll={{
+          y: scrollY,
+        }}
         columns={[
           {
             title: '时间',
@@ -195,7 +236,6 @@ const Index = () => {
             dataIndex: 'record.remark',
           },
         ]}
-        pagination={false}
         onRow={row => {
           if (!row?.bill) {
             return {

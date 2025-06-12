@@ -1,7 +1,34 @@
+body {
+  margin: 0;
+}
+
+.page-diff {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  gap: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.page-diff > .setup {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.page-diff > .setup > * {
+  flex: 1;
+}
+
+.diff-table {
+  flex: 1;
+}
+
 .diff-table .diff-add {
   background-color: rgba(var(--semi-green-5), 0.15);
 }
 
 .diff-table .diff-remove {
-  background-color: rgba(var(--semi-red-5), 0.15)
+  background-color: rgba(var(--semi-red-5), 0.15);
 }
