@@ -49,7 +49,7 @@ const useModel = () => {
     data: billData,
     loading: loadingBillData,
     run: parseBillData,
-  } = useRequest((file: File, app: IBillAppConfig) => app.parser(file), {
+  } = useRequest((input: any, app: IBillAppConfig) => app.parser(input), {
     manual: true,
     onSuccess: () => {
       const v: FormValue['record'] = formApi.current?.getValue('record');
@@ -91,15 +91,15 @@ const useModel = () => {
         .map(x => Number(x![1]));
       const changedIndex = uniq(keys);
       changedIndex.forEach(index => {
-        const { file, account, type } = values.record[index];
+        const { file, type } = values.record[index];
         const parser = recordApps.find(x => x.key === type);
-        if (!file || !account || !type || !parser) {
+        if (!file || !type || !parser) {
           setRecordStatus(index, null);
           return;
         }
         setRecordStatus(index, 'loading');
         parser
-          .parser(file, account)
+          .parser(file)
           .then(result => setRecordStatus(index, result))
           .catch((err: Error) => {
             Toast.error(err.message);

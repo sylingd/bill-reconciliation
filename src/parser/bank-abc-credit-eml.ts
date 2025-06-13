@@ -10,7 +10,7 @@ const BankABCCreditEML: IRecordAppConfig = {
   key: 'bang-abc-credit-eml',
   name: '农业银行信用卡（电子账单）',
   picker: () => loadFile('eml'),
-  parser: async (file, account) => {
+  parser: async file => {
     const idle = new Idle();
     const content = await readFileText(file);
     await idle.sleep();
@@ -89,7 +89,6 @@ const BankABCCreditEML: IRecordAppConfig = {
 
       result.push({
         id: `abc-${line.join(',')}-${nanoid()}`,
-        account,
         type: money > 0 ? BillType.EXPENSE : BillType.INCOME,
         money: String(Math.abs(money)),
         time: dayjs()

@@ -8,7 +8,7 @@ const BankCGBCredit: IRecordAppConfig = {
   key: 'bang-cgb-credit',
   name: '广发银行信用卡',
   picker: () => loadFile('csv'),
-  parser: async (file, account) => {
+  parser: async file => {
     const idle = new Idle();
     const content = (await readFileText(file, 'GB2312')).trim().split('\n');
     await idle.sleep();
@@ -38,7 +38,6 @@ const BankCGBCredit: IRecordAppConfig = {
 
       result.push({
         id: `cgb-${line[timeIndex].trim()}-${nanoid()}`,
-        account,
         type: money > 0 ? BillType.EXPENSE : BillType.INCOME,
         money: line[moneyIndex]
           .trim()

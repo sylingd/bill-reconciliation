@@ -21,23 +21,25 @@ export interface IBillItem {
 
 export interface IRecordItem {
   id: string;
-  account: string;
   type: BillType;
   time: number;
   money: string;
   remark: string;
 }
-
-export interface IBillAppConfig {
-  key: string;
-  name: string;
-  picker: () => Promise<File>;
-  parser: (file: File) => Promise<IBillItem[]>;
+export interface IRecordItemWithAccount extends IRecordItem {
+  account: string;
 }
 
-export interface IRecordAppConfig {
+export interface IBillAppConfig<T = File> {
   key: string;
   name: string;
-  picker: () => Promise<File>;
-  parser: (file: File, account: string) => Promise<IRecordItem[]>;
+  picker: () => Promise<T>;
+  parser: (input: T) => Promise<IBillItem[]>;
+}
+
+export interface IRecordAppConfig<T = File> {
+  key: string;
+  name: string;
+  picker: () => Promise<T>;
+  parser: (input: T) => Promise<IRecordItem[]>;
 }

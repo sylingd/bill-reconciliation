@@ -1,5 +1,10 @@
 import { BillTypeName } from '@/constant';
-import { BillType, type IBillItem, type IRecordItem } from '@/types';
+import {
+  BillType,
+  type IBillItem,
+  type IRecordItem,
+  type IRecordItemWithAccount,
+} from '@/types';
 import { findBreakPoint } from './arr';
 import { Idle } from './idle';
 
@@ -25,7 +30,7 @@ export async function prepareBillRecord(
   accountNames: string[],
   bill: IBillItem[],
 ) {
-  const result: IRecordItem[] = [];
+  const result: IRecordItemWithAccount[] = [];
   const idle = new Idle();
 
   for (let i = 0; i < bill.length; i++) {
