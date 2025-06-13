@@ -42,8 +42,6 @@ jobs:
       run: |
         npm run build
         rm -f $GITHUB_WORKSPACE/dist/*.json
-        mv $GITHUB_WORKSPACE/dist/html/main/index.html $GITHUB_WORKSPACE/dist/index.html
-        echo "bill-reconciliation.sylibs.com" > $GITHUB_WORKSPACE/dist/CNAME
     - name: Deploy to EO Pages
       env:
         EO_PAGE_NAME: ${{ secrets.EO_PAGE_NAME }}
