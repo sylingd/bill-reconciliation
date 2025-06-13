@@ -8,10 +8,10 @@
 *.log*
 
 node_modules/
+node_modules_bak/
 .yarn-integrity
 .pnpm-store/
 *.tsbuildinfo
-.eslintcache
 .changeset/pre.json
 
 dist/
@@ -20,6 +20,7 @@ release/
 output/
 output_resource/
 log/
+.output/
 
 .vscode/**/*
 !.vscode/settings.json
@@ -29,3 +30,18 @@ log/
 **/*/typings/auto-generated
 
 modern.config.local.*
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+config.json
+
+# Deploy
+/coscmd
+/coscli
+/deploy.zip
+/lay.zip
+/coscli_output
+/test.sh

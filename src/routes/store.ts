@@ -1,4 +1,8 @@
-import { BaseFormProps, FormApi } from '@douyinfe/semi-ui/lib/es/form';
+import { recordApps } from '@/parser';
+import type { IBillAppConfig, IRecordItem } from '@/types';
+import { billDiff, prepareBillRecord } from '@/utils/diff';
+import { Toast } from '@douyinfe/semi-ui';
+import type { BaseFormProps, FormApi } from '@douyinfe/semi-ui/lib/es/form';
 import { useRequest } from 'ahooks';
 import { uniq } from 'lodash-es';
 import {
@@ -9,10 +13,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Toast } from '@douyinfe/semi-ui';
-import { IBillAppConfig, IRecordItem } from '@/types';
-import { recordApps } from '@/parser';
-import { billDiff, prepareBillRecord } from '@/utils/diff';
 
 interface FormValue {
   record: Array<{
@@ -29,6 +29,8 @@ const useModel = () => {
     (api: FormApi) => (formApi.current = api),
     [],
   );
+
+  const [showEdit, setShowEdit] = useState(true);
 
   const [recordStatus, _setRecordStatus] = useState<Array<RecordStatus>>([]);
   const setRecordStatus = useCallback((index: number, value: RecordStatus) => {
@@ -80,12 +82,6 @@ const useModel = () => {
   const formOnChange: BaseFormProps['onValueChange'] = useCallback(
     (values: any, changedValues: any) => {
       const keys = Object.keys(changedValues)
-        .filter(
-          x =>
-            x.endsWith('.account') ||
-            x.endsWith('.type') ||
-            x.endsWith('.file'),
-        )
         .map(x => x.match(/record\[(\d+)\]/))
         .filter(x => Boolean(x))
         .map(x => Number(x![1]));
@@ -137,6 +133,7 @@ const useModel = () => {
     },
     {
       manual: true,
+      onSuccess: () => setShowEdit(false),
       onError: e => Toast.error(e.message),
     },
   );
@@ -154,6 +151,8 @@ const useModel = () => {
     doDiff,
     account,
     category,
+    showEdit,
+    setShowEdit,
   };
 };
 

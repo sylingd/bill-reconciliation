@@ -1,6 +1,5 @@
-import './index.css';
-import Bill from './sections/bill';
-import Record from './sections/record';
+import './index.less';
+import Edit from './sections/edit';
 import Result from './sections/result';
 import { Context, useModel } from './store';
 
@@ -9,8 +8,7 @@ const Index = () => {
 
   return (
     <Context.Provider value={model}>
-      <Bill />
-      <Record />
+      <Edit />
       <Result />
     </Context.Provider>
   );

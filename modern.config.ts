@@ -7,9 +7,12 @@ export default defineConfig<'rspack'>({
   runtime: {
     router: true,
   },
+  source: {
+    transformImport: false,
+  },
   plugins: [
     appTools({
-      bundler: 'experimental-rspack',
+      bundler: 'rspack',
     }),
   ],
   output: {
@@ -22,6 +25,9 @@ export default defineConfig<'rspack'>({
     },
     enableAssetManifest: false,
     disableSourceMap: true,
+  },
+  dev: {
+    writeToDisk: false,
   },
   html: {
     tags: [
@@ -46,7 +52,7 @@ export default defineConfig<'rspack'>({
       {
         tag: 'script',
         attrs: {
-          src: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.54.1/dist/umd/${
+          src: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.73.0/dist/umd/${
             IS_DEV ? 'semi-ui.js' : 'semi-ui.min.js'
           }`,
         },
@@ -56,7 +62,7 @@ export default defineConfig<'rspack'>({
         tag: 'link',
         attrs: {
           rel: 'stylesheet',
-          href: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.54.1/dist/css/${
+          href: `https://unpkg.byted-static.com/douyinfe/semi-ui/2.73.0/dist/css/${
             IS_DEV ? 'semi.css' : 'semi.min.css'
           }`,
         },
@@ -65,7 +71,7 @@ export default defineConfig<'rspack'>({
       {
         tag: 'script',
         attrs: {
-          src: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.48.0/dist/umd/semi-icons.min.js',
+          src: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.73.0/dist/umd/semi-icons.min.js',
         },
         head: true,
       },
@@ -73,7 +79,7 @@ export default defineConfig<'rspack'>({
         tag: 'link',
         attrs: {
           rel: 'stylesheet',
-          href: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.48.0/dist/css/semi-icons.css',
+          href: 'https://unpkg.byted-static.com/douyinfe/semi-icons/2.73.0/dist/css/semi-icons.css',
         },
         head: true,
       },

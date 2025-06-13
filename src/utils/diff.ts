@@ -1,9 +1,9 @@
-import { Idle } from './idle';
-import { findBreakPoint } from './arr';
-import { BillType, IBillItem, IRecordItem } from '@/types';
 import { BillTypeName } from '@/constant';
+import { BillType, type IBillItem, type IRecordItem } from '@/types';
+import { findBreakPoint } from './arr';
+import { Idle } from './idle';
 
-interface IBillDiffResult {
+export interface IBillDiffResult {
   id: string;
   score: number;
   time: number;

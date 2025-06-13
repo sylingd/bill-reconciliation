@@ -1,11 +1,11 @@
 export enum BillType {
-  INCOME, // 收入
-  EXPENSE, // 支出
-  TRANSFER, // 转账
-  BORROW_IN, // 债务-借入
-  BORROW_OUT, // 债务-借出
-  PAYBACK_IN, // 债务-收款
-  PAYBACK_OUT, // 债务-还款
+  INCOME = 0, // 收入
+  EXPENSE = 1, // 支出
+  TRANSFER = 2, // 转账
+  BORROW_IN = 3, // 债务-借入
+  BORROW_OUT = 4, // 债务-借出
+  PAYBACK_IN = 5, // 债务-收款
+  PAYBACK_OUT = 6, // 债务-还款
 }
 
 export interface IBillItem {

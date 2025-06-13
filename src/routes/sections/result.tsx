@@ -1,17 +1,47 @@
+import { BillTypeName } from '@/constant';
 import { Button, Card, Table } from '@douyinfe/semi-ui';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStore } from '../store';
-import { BillTypeName } from '@/constant';
 
 const Result = () => {
-  const { billData, loadingDiffData, diffData, doDiff } = useStore();
+  const { billData, loadingDiffData, diffData, setShowEdit } = useStore();
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [scrollY, setScrollY] = useState(0);
+
+  const updateScrollYRef = useRef<ReturnType<typeof requestAnimationFrame>>();
+  const updateScrollY = useCallback(() => {
+    if (typeof updateScrollYRef.current !== 'undefined') {
+      return;
+    }
+    updateScrollYRef.current = requestAnimationFrame(() => {
+      const dom = document.querySelector('.diff-table') as HTMLDivElement;
+      setScrollY(dom.offsetHeight - 38);
+      updateScrollYRef.current = undefined;
+    });
+  }, []);
+
+  useEffect(() => {
+    updateScrollY();
+    window.addEventListener('resize', updateScrollY);
+    return () => {
+      window.removeEventListener('resize', updateScrollY);
+    };
+  }, []);
+
+  useEffect(() => {
+    updateScrollY();
+  }, [diffData]);
 
   return (
-    <Card title="查看结果">
-      <Button onClick={doDiff}>计算结果</Button>
+    <Card
+      title="查看结果"
+      className="result-card"
+      headerExtraContent={
+        <Button onClick={() => setShowEdit(true)}>设置</Button>
+      }
+    >
       <Table
         className="diff-table"
         rowKey="id"
@@ -26,7 +56,7 @@ const Result = () => {
           itemSize: 37,
         }}
         scroll={{
-          y: 500,
+          y: scrollY,
         }}
         columns={[
           {

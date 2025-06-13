@@ -1,20 +1,19 @@
-import { Button, Card, Space, Spin, Tag } from '@douyinfe/semi-ui';
-import { useStore } from '../store';
 import { billApps } from '@/parser';
+import { Button, Card, Divider, Space, Spin, Tag } from '@douyinfe/semi-ui';
+import { useStore } from '../../store';
 
 const Bill = () => {
   const { billData, loadingBillData, parseBillData } = useStore();
   return (
-    <Card
-      title={
+    <div className="section">
+      <Divider align="center">
         <Space>
           <Tag color={billData ? 'green' : 'red'}>
             {billData ? '已' : '未'}选择
           </Tag>
           <span>第一步：选择记账软件</span>
         </Space>
-      }
-    >
+      </Divider>
       <Spin spinning={loadingBillData}>
         <Space>
           {billApps.map(x => (
@@ -30,7 +29,7 @@ const Bill = () => {
           ))}
         </Space>
       </Spin>
-    </Card>
+    </div>
   );
 };
 

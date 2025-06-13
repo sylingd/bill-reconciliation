@@ -1,7 +1,10 @@
+import { recordApps } from '@/parser';
+import { IconPlusCircle } from '@douyinfe/semi-icons';
 import {
   ArrayField,
   Button,
   Card,
+  Divider,
   Dropdown,
   Form,
   Space,
@@ -11,9 +14,8 @@ import {
   useFieldApi,
   useFieldState,
 } from '@douyinfe/semi-ui';
-import { FC } from 'react';
-import { RecordStatus, useStore } from '../store';
-import { recordApps } from '@/parser';
+import type { FC } from 'react';
+import { type RecordStatus, useStore } from '../../store';
 
 interface RecordFilePickerProps {
   field: string;
@@ -25,7 +27,6 @@ const RecordFilePicker: FC<RecordFilePickerProps> = ({ field }) => {
 
   return (
     <Dropdown
-      showArrow
       menu={recordApps.map(x => ({
         node: 'item',
         name: x.name,
@@ -44,7 +45,7 @@ const RecordFilePicker: FC<RecordFilePickerProps> = ({ field }) => {
         },
       }))}
     >
-      <Button style={{ width: '300px' }}>
+      <Button className="file-picker">
         {file ? `已选择：${(file as File).name}` : '选择文件'}
       </Button>
     </Dropdown>
@@ -73,21 +74,22 @@ const Record = () => {
     useStore();
 
   return (
-    <Card title="第二步：选择账单（可多选）">
+    <div className="section section-record">
+      <Divider align="center">第二步：选择账单（可多选）</Divider>
       <Form onValueChange={formOnChange} getFormApi={onGetFormApi}>
         <ArrayField field="record" initValue={[{}]}>
           {({ arrayFields, addWithInitValue }) => (
             <Space vertical align="start" style={{ width: '100%' }}>
               {arrayFields.map(({ field, key, remove }, index) => (
-                <Space key={key}>
+                <div key={key} className="item">
                   <div style={{ width: '60px' }}>
                     {renderStatus(recordStatus[index])}
                   </div>
                   <RecordFilePicker field={field} />
                   <Form.Select
-                    style={{ width: '300px' }}
                     noLabel
                     field={`${field}.account`}
+                    fieldClassName="account"
                     optionList={account}
                   />
                   <Button
@@ -98,14 +100,19 @@ const Record = () => {
                   >
                     移除
                   </Button>
-                </Space>
+                </div>
               ))}
-              <Button onClick={() => addWithInitValue({})}>添加更多</Button>
+              <Button
+                onClick={() => addWithInitValue({})}
+                icon={<IconPlusCircle />}
+              >
+                添加更多
+              </Button>
             </Space>
           )}
         </ArrayField>
       </Form>
-    </Card>
+    </div>
   );
 };
 
