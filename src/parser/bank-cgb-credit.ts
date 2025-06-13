@@ -1,12 +1,12 @@
-import dayjs from 'dayjs';
-import { nanoid } from 'nanoid';
-import { BillType, IRecordAppConfig, IRecordItem } from '@/types';
+import { BillType, type IRecordAppConfig, type IRecordItem } from '@/types';
 import { loadFile, readFileText } from '@/utils/file';
 import { Idle } from '@/utils/idle';
+import dayjs from 'dayjs';
+import { nanoid } from 'nanoid';
 
-const BankCGB: IRecordAppConfig = {
-  key: 'bang-cgb',
-  name: '广发银行',
+const BankCGBCredit: IRecordAppConfig = {
+  key: 'bang-cgb-credit',
+  name: '广发银行信用卡',
   picker: () => loadFile('csv'),
   parser: async (file, account) => {
     const idle = new Idle();
@@ -54,4 +54,4 @@ const BankCGB: IRecordAppConfig = {
   },
 };
 
-export default BankCGB;
+export default BankCGBCredit;

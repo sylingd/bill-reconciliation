@@ -1,5 +1,6 @@
+import BankABCCreditEML from './bank-abc-credit-eml';
+import BankCGBCredit from './bank-cgb-credit';
 import QianJi from './qianji';
-import BankCGB from './bank-cgb';
 
 export const billApps = [QianJi];
-export const recordApps = [BankCGB];
+export const recordApps = [BankCGBCredit, BankABCCreditEML];

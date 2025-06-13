@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
-import { BillType, IBillAppConfig, IBillItem } from '@/types';
+import { BillType, type IBillAppConfig, type IBillItem } from '@/types';
 import { loadFile, readFileText } from '@/utils/file';
 import { Idle } from '@/utils/idle';
+import dayjs from 'dayjs';
 
 export const importQianJiFile = () => loadFile('csv');
 

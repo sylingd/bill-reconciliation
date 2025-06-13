@@ -24,6 +24,9 @@ interface FormValue {
 
 export type RecordStatus = Error | IRecordItem[] | 'loading' | null;
 const useModel = () => {
+  const formValue = useRef<FormValue>({
+    record: [],
+  });
   const formApi = useRef<FormApi>();
   const onGetFormApi = useCallback(
     (api: FormApi) => (formApi.current = api),
@@ -81,6 +84,7 @@ const useModel = () => {
 
   const formOnChange: BaseFormProps['onValueChange'] = useCallback(
     (values: any, changedValues: any) => {
+      formValue.current = values;
       const keys = Object.keys(changedValues)
         .map(x => x.match(/record\[(\d+)\]/))
         .filter(x => Boolean(x))
@@ -97,7 +101,11 @@ const useModel = () => {
         parser
           .parser(file, account)
           .then(result => setRecordStatus(index, result))
-          .catch(err => setRecordStatus(index, err as Error));
+          .catch((err: Error) => {
+            Toast.error(err.message);
+            console.error(err);
+            setRecordStatus(index, err);
+          });
       });
     },
     [],
@@ -119,9 +127,9 @@ const useModel = () => {
       if (!billData || records.length === 0) {
         throw new Error('没有对比账单');
       }
-      const accounts = formApi.current
-        ?.getValue('record')
-        .map((x: any) => x.account);
+      const accounts = (formValue.current?.record || []).map(
+        (x: any) => x.account,
+      );
       const rec = await prepareBillRecord(accounts, billData);
       console.log('prepareBillRecord', rec);
       const recordData = records
@@ -134,7 +142,10 @@ const useModel = () => {
     {
       manual: true,
       onSuccess: () => setShowEdit(false),
-      onError: e => Toast.error(e.message),
+      onError: e => {
+        Toast.error(e.message);
+        console.error(e);
+      },
     },
   );
 
@@ -153,6 +164,7 @@ const useModel = () => {
     category,
     showEdit,
     setShowEdit,
+    formValue,
   };
 };
 

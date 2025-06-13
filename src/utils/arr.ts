@@ -8,5 +8,5 @@ export function findBreakPoint<T>(
       return i;
     }
   }
-  return -1;
+  return 0;
 }

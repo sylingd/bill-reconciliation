@@ -26,8 +26,6 @@ jobs:
         node-version: [18.x]
     steps:
     - uses: actions/checkout@v4
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
     - uses: pnpm/action-setup@v4
       with:
         version: 9
@@ -46,6 +44,4 @@ jobs:
       env:
         EO_PAGE_NAME: ${{ secrets.EO_PAGE_NAME }}
         EO_PAGE_TOKEN: ${{ secrets.EO_PAGE_TOKEN }}
-      run: |
-        npm i -g edgeone
-        edgeone pages deploy $GITHUB_WORKSPACE/dist -n $EO_PAGE_NAME -t $EO_PAGE_TOKEN
+      run: npx edgeone pages deploy $GITHUB_WORKSPACE/dist -n $EO_PAGE_NAME -t $EO_PAGE_TOKEN

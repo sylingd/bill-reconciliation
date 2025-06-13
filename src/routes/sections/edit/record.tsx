@@ -14,7 +14,7 @@ import {
   useFieldApi,
   useFieldState,
 } from '@douyinfe/semi-ui';
-import type { FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { type RecordStatus, useStore } from '../../store';
 
 interface RecordFilePickerProps {
@@ -76,8 +76,12 @@ const Record = () => {
   return (
     <div className="section section-record">
       <Divider align="center">第二步：选择账单（可多选）</Divider>
-      <Form onValueChange={formOnChange} getFormApi={onGetFormApi}>
-        <ArrayField field="record" initValue={[{}]}>
+      <Form
+        onValueChange={formOnChange}
+        getFormApi={onGetFormApi}
+        initValues={{ record: [{}] }}
+      >
+        <ArrayField field="record">
           {({ arrayFields, addWithInitValue }) => (
             <Space vertical align="start" style={{ width: '100%' }}>
               {arrayFields.map(({ field, key, remove }, index) => (

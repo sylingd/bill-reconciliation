@@ -1,5 +1,6 @@
 import { BillTypeName } from '@/constant';
-import { Button, Card, Table } from '@douyinfe/semi-ui';
+import { IconExport } from '@douyinfe/semi-icons';
+import { Button, Card, Space, Table } from '@douyinfe/semi-ui';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStore } from '../store';
@@ -36,10 +37,21 @@ const Result = () => {
 
   return (
     <Card
-      title="查看结果"
+      title="对比结果"
       className="result-card"
       headerExtraContent={
-        <Button onClick={() => setShowEdit(true)}>设置</Button>
+        <Space>
+          {selectedKeys.length > 0 && (
+            <Button icon={<IconExport />}>导出</Button>
+          )}
+          <Button
+            onClick={() => setShowEdit(true)}
+            theme="solid"
+            type="primary"
+          >
+            开始对比
+          </Button>
+        </Space>
       }
     >
       <Table

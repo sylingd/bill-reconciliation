@@ -22,6 +22,7 @@
     "@modern-js/runtime": "2.67.8",
     "ahooks": "^3.7.8",
     "dayjs": "^1.11.10",
+    "eml-parse-js": "1.2.0-beta.0",
     "lodash-es": "^4.17.21",
     "mathjs": "^12.2.0",
     "nanoid": "^3.3.7",
