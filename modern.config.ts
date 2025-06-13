@@ -9,6 +9,7 @@ export default defineConfig<'rspack'>({
   },
   source: {
     transformImport: false,
+    mainEntryName: 'index',
   },
   plugins: [
     appTools({
@@ -25,11 +26,15 @@ export default defineConfig<'rspack'>({
     },
     enableAssetManifest: false,
     disableSourceMap: true,
+    distPath: {
+      html: '',
+    },
   },
   dev: {
     writeToDisk: false,
   },
   html: {
+    outputStructure: 'flat',
     tags: [
       {
         tag: 'script',
